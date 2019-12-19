@@ -134,13 +134,7 @@ for tt=1:len
                 LVprop(j)=Lprop;
                 
                 accept=min(1, pistardiv(LVprop,V)*(Qtm1/Qprop));
-                %pistardiv(LVprop,V)*(Qtm1/Qprop)
-                %accept=min(1, pistar(LVprop)/pistar(V)*(Qtm1/Qprop));
-                %pdfdiv(LVprop,V)
-                
-                %(LVprop(1)/V(1))^(alpha)*exp(-(V(2)+1)*(LVprop(1)-V(1)))
-  
-                %gampdf(Lprop,alpha+sarr(j), 1/(tarr(j)+V(end)))/gampdf(V(j),alpha+sarr(j), 1/(tarr(j)+V(end)))
+             
                 
                 coinmh=unifrnd(0,1);
                 
@@ -175,7 +169,6 @@ for tt=1:len
                 
 
             accept=min(1, pistardiv(LVprop, V)*(Qtm1/Qprop));
-            %accept=min(1, pistar(LVprop)/pistar(V)*(Qtm1/Qprop));
             
             coinmh=unifrnd(0,1);
             
@@ -194,7 +187,6 @@ for tt=1:len
             propSA=V;
         end
         
-        % W=propSA+unifrnd(0,1/M,[1,Dims]);
         
         Mnow=zeros(1, Dims);
         for i=1:Dims
@@ -203,6 +195,7 @@ for tt=1:len
         end
         
         W=propSA+unifrnd(zeros(1, length(Mnow)), 1./Mnow);
+        
     else % Xt in E
         
         if useGibbs==0
@@ -230,14 +223,14 @@ for tt=1:len
             Mnow(i)=bb*M(i)+(1-bb)*Mout(i);
         end
         
-        % This formula is like genius, finding the corresponding atom
+        % This formula finds the corresponding atom
         W=floor(V.*Mnow)./Mnow;  
     end
     
     if (sprec(tt)==1) % Xt in E, propose to go to A
 
         a2VW=min(1, pistardivpdf(W,V));
-        %a2VW=min(1, pistar(W)/pdf(V));
+        
     else % Xt in A, propose to go to E
         
         Watom=floor(W.*M)./M;
@@ -248,7 +241,7 @@ for tt=1:len
             Mnow(i)=bb*M(i)+(1-bb)*Mout(i);
         end
         
-        % Just use genius formula to locate corresponding atom in SA for W
+        % Locate corresponding atom in SA for W
         Vcor=floor(W.*Mnow)./Mnow;
 
         a2VW=min(1, pdfdivpistar(W,Vcor));
@@ -302,24 +295,12 @@ while tt<length(yrec) % Loop through the sample path
 end
 ii=11
 Sti=St(:,ii);
+
+% The mean estimate
 u=mean(clyrec(:,ii));
+
+% The error/variance estimate
 sigmart=sqrt((sum((Sti-u.*Nt).^2))/(length(Nt)^2*mean(Nt)^2))
-
-
-
-
-
-% fplot(pdf);hold on; %fplot(phipdfarr{1}); fplot(phipdfarr{2})
-% histogram(clyrec,500, 'Normalization','pdf','FaceColor', [0 0 0]);
-% legend('Target Distribution', 'Samples')
-% histogram(imyrec,'Normalization','pdf')
-% plot(clyrec)
-
-% fplot(pdf);hold on; %fplot(phipdfarr{1}); fplot(phipdfarr{2})
-% compa=mhsample(-5,50000,'pdf',pdf,'proprnd',proprnd,...
-%                 'proppdf',proppdf);
-% histogram(compa,100,'Normalization','pdf')
-% legend('Target Distribution', 'Samples')
 
 
 
@@ -378,13 +359,6 @@ end
 function m=pdfdivpistar(x,y) 
 import NamedConst
 
-% if isinSA(x)
-%     x=NamedConst.cent0;
-% end
-% 
-% if isinSA(y)
-%     y=NamedConst.cent0;
-% end
 
 m=pdfdiv(x,y);
 
@@ -393,10 +367,7 @@ end
 function m=pistardivpdf(x,y)
 import NamedConst
 
-% pistar(x)/pdf(y)
-% if isinSA(x) 
-%     x=NamedConst.cent0;
-% end
+
 
 m=pdfdiv(x,y);
 
@@ -431,11 +402,6 @@ m=pdfdiv(x,y)*exp(logxvol-logyvol);
 
 end
 
-% function m=isinSAUnif(x)
-% import NamedConst
-% m=all(round(abs(x-NamedConst.cent0),NamedConst.dig)<=NamedConst.Radi);
-% end 
-% 
 function m=isinSAun(x,atmproj)
     m=0;
     for i=1:length(atmproj)
@@ -502,27 +468,6 @@ end
 
 end
 
-% function m=randSAUnif(len)
-% import NamedConst
-% cent0=NamedConst.cent0;
-% Radi=NamedConst.Radi;
-% M=NamedConst.M;
-% 
-% cent0=floor(cent0*M)/M;
-% Radi=floor(Radi*M)/M;
-% 
-% Radiatom=Radi*M;
-% 
-% 
-% 
-% UnifSamples=[];
-% for i=1:length(cent0)
-%     UnifSamples=[UnifSamples randi([-round(Radiatom(i)),round(Radiatom(i))], [len,1])];
-% end
-% 
-% m=repmat(cent0,len,1)+(1/M)*UnifSamples;
-% 
-% end
 
 function [M, atmproj]=MatmBuild()
 % An elementary build: basically for each coordinate, choose number of
@@ -549,12 +494,6 @@ end
 end
 
 
-
-% 
-% function m=isinSA(x)
-% import NamedConst
-% m=all(round(abs(x-NamedConst.cent0),NamedConst.dig)<=NamedConst.Radi);
-% end 
 
 
 
