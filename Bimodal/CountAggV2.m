@@ -33,7 +33,7 @@ sprec(1)=1;
 % All atoms to be collapsed
 lb=2;
 ub=4;
-SA=[-4:1/M:2 2:1/M:4];%[-5:(1/M):5];%[-4:1/M:-2 lb:(1/M):ub];
+SA=[-4:1/M:2 2:1/M:4];
 
 
 % Sample from SA proportional to pistar
@@ -157,7 +157,11 @@ while tt<length(yrec)
     tt=tt+1;
     
 end
+
+% Mean Estimate
 u=mean(clyrec);
+
+% Variance Estimate
 sigmart=sqrt((sum((St-u.*Nt).^2))/(length(Nt)^2*mean(Nt)^2))
 
 fplot(pdf);hold on; 
