@@ -22,9 +22,7 @@ theta=IsingData.theta;
 len=10000;
 yrec=zeros(N,N,len);
 yrec(:,:,1)=ones(N,N); % Initial state
-% bm=randi([0 1],N,N);
-% bm(bm==0)=-1;
-% yrec(:,:,1)=bm;
+
 
 
 cache=zeros(1,N^2+1); % The third indx is number of -1's
@@ -140,7 +138,7 @@ for j=1:length(Matm)
 
         logpistar(j)=theta*2048;
     else
-        %pistar(numm1s+1)=exp(prod(log((N^2-numm1s+1):(N^2)))-prod(log(1:numm1s))+theta*cache(numm1s)-Base0);
+        
         logpistar(j)=sum(log((N^2-numm1s+1):(N^2)))-sum(log(1:numm1s))+theta*Matmrept(j);
     end
     
@@ -440,57 +438,7 @@ tourarr(seed)=length(Nt);
 reaarr(seed)=length(sprec(sprec==1));
 
 end
+
+% Summary table
 stats=[uarr; sigarr; tourarr; reaarr];
-% realtst=tstarr(tstarr~=0);
-% mean(realtst)
-% std(realtst)
-% numonesarrind=[(1:length(numonesarr))' numonesarr tstarr reshape(yrec(1,1,:),length(yrec(1,1,:)),1,1)];
-% A=numonesarrind(numonesarr==1022,:);
-% B=sortrows(A,3);
-% 
-% numm1s=99;
-% inds=datasample(1:N^2, numm1s, 'Replace',false);
-% [I,J]=ind2sub([N,N],inds);
-% yprop=ones(N);
-% for i=1:numm1s
-%     yprop(I(i),J(i))=-1;
-% end  
-% % 
-% % % 5. Compute natural statistics of yprop
-% tstyprop=0;
-% for x=1:N
-%     for y=1:N
-% 
-% 
-%         if (x==1)
-%             xup=N;
-%         else
-%             xup=x-1;
-%         end
-% 
-%         if (x==32)
-%             xdown=1;
-%         else
-%             xdown=x+1;
-%         end
-% 
-%         if (y==1)
-%             yleft=N;
-%         else
-%             yleft=y-1;
-%         end
-% 
-%         if (y==32)
-%             yright=1;
-%         else
-%             yright=y+1;
-%         end
-% 
-%         s=yprop(x,yleft)+yprop(xup,y)+yprop(x,yright)+yprop(xdown,y);
-% 
-%         tstyprop=tstyprop+yprop(x,y)*(s);
-%     end
-% end
-% tstyprop=tstyprop*0.5
-% nnz(yprop(:,17:end)==-1)
-% atomreccb=[(1:length(atomrec))' atomrec];
+
