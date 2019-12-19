@@ -134,7 +134,7 @@ for jj=1:length(SA)
                 ponemask(end)=false;
                 avc=parr(ponemask);
                 
-                % avc=setdiff(1:(p-1), Yt(Edges(j,:)));
+
                 if isempty(avc)
                     Yt=zeros(1,nv);
                     break;
@@ -185,7 +185,7 @@ for tt=2:len
         for ii=1:nv
             
             % Find valid color
-            % valcol=setdiff(parr,Yt(logical(Edges(ii,:))));
+
             
             ponemask=true(1,p);
             ponemask((Yt(Edges(ii,:))))=false;
@@ -226,7 +226,7 @@ for tt=2:len
                     ponemask(end)=false;
                     avc=parr(ponemask);
                     
-                    % avc=setdiff(1:(p-1),Zt(Edges(kk,:)));
+
                     prob=prob/length(avc);
                     Zt(kk)=Yt(kk);
                 end
@@ -255,7 +255,7 @@ for tt=2:len
         
     else % Currently on A
         
-        %atsanum=atomrec(tt-1); % Comment out for we want to shuffle
+
         % shuffle
         atsanum=randsample(1:length(SA),1,true, pistar./sum(pistar));
         
