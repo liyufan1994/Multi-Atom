@@ -59,7 +59,7 @@ for tt=2:len
             else
                 Yt(x,y)=-1;
             end
-            %Yt(x,y)=randsample([-1 1],1,true,[1-Ppos Ppos]);
+            
         end
     end
     
@@ -121,15 +121,6 @@ newDATA=[(1:length(numonesarr))' numonesarr tstarr];
 preDATA=[preDATA; newDATA];
 end
 
-%save('prerun.mat','preDATA');
-% 
-% BB=sortrows(preDATA,2);
-% XX=BB(BB(:,2)==777);
-% for ir=1:length(XX)
-%     inn=XX(ir);
-% W=[nnz(yrec(1:16,1:16,inn)==-1) nnz(yrec(1:16,17:32,inn)==-1); nnz(yrec(17:32,1:16,inn)==-1) nnz(yrec(17:32,17:32,inn)==-1)];
-% RL=[nnz(yrec(1:16,:,inn)==-1) nnz(yrec(17:end,:,inn)==-1)]
-% UD=[nnz(yrec(:,1:16,inn)==-1) nnz(yrec(:,17:end,inn)==-1)];
-% tstarr(inn)
-% end
+save('prerun.mat','preDATA');
+
 
